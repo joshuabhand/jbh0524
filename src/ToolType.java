@@ -1,8 +1,25 @@
 public class ToolType {
+    private String toolTypeName;
     private float dailyCharge;
-    private float weekdayCharge;
-    private float weekendCharge;
-    private float holidayCharge;
+    private boolean weekdayCharge;
+    private boolean weekendCharge;
+    private boolean holidayCharge;
+
+    public ToolType(String toolTypeName, float dailyCharge, boolean weekdayCharge, boolean weekendCharge, boolean holidayCharge) {
+        this.toolTypeName = toolTypeName;
+        this.dailyCharge = dailyCharge;
+        this.weekdayCharge = weekdayCharge;
+        this.weekendCharge = weekendCharge;
+        this.holidayCharge = holidayCharge;
+    }
+
+    public String getToolTypeName() {
+        return toolTypeName;
+    }
+
+    public void setToolTypeName(String toolTypeName) {
+        this.toolTypeName = toolTypeName;
+    }
 
     public float getDailyCharge() {
         return dailyCharge;
@@ -12,27 +29,27 @@ public class ToolType {
         this.dailyCharge = dailyCharge;
     }
 
-    public float getWeekdayCharge() {
+    public boolean getWeekdayCharge() {
         return weekdayCharge;
     }
 
-    public void setWeekdayCharge(float weekdayCharge) {
+    public void setWeekdayCharge(boolean weekdayCharge) {
         this.weekdayCharge = weekdayCharge;
     }
 
-    public float getWeekendCharge() {
+    public boolean getWeekendCharge() {
         return weekendCharge;
     }
 
-    public void setWeekendCharge(float weekendCharge) {
+    public void setWeekendCharge(boolean weekendCharge) {
         this.weekendCharge = weekendCharge;
     }
 
-    public float getHolidayCharge() {
+    public boolean getHolidayCharge() {
         return holidayCharge;
     }
 
-    public void setHolidayCharge(float holidayCharge) {
+    public void setHolidayCharge(boolean holidayCharge) {
         this.holidayCharge = holidayCharge;
     }
 }
