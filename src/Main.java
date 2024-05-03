@@ -9,8 +9,12 @@ public class Main {
         Tool toolLadder = new Tool("LADW", toolTypeLadder, "Werner");
         inventory.addNewTool(toolLadder);
 
-        String checkoutLadderRental = inventory.checkout(toolLadder, 5, 20, new GregorianCalendar(2024, Calendar.MAY, 3));
+        String checkoutLadderRental;
+        try {
+            checkoutLadderRental = inventory.checkout("LADW", 5, 20, new GregorianCalendar(2024, Calendar.MAY, 3));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         System.out.println(checkoutLadderRental);
-
     }
 }

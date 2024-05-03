@@ -1,14 +1,15 @@
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Inventory {
     private static Inventory inventory;
-    private final List<Tool> tools;
+    private final Map<String, Tool> toolsMap;
 
     private Inventory() {
-        tools = new ArrayList<>();
+        toolsMap = new HashMap<>();
     }
 
     public static Inventory getInstance() {
@@ -20,11 +21,19 @@ public class Inventory {
     }
 
     public void addNewTool(Tool tool) {
-        tools.add(tool);
+        toolsMap.put(tool.getToolCode(), tool);
     }
 
-    public String checkout(Tool tool, int rentalDayCount, int discountPercent, Calendar checkoutDate) {
+    public String checkout(String toolCode, int rentalDayCount, int discountPercent, Calendar checkoutDate) throws IllegalArgumentException {
+        if(rentalDayCount < 1) {
+            throw new IllegalArgumentException("Rental day count must be 1 or greater");
+        }
+        if(discountPercent < 0 || discountPercent > 100) {
+            throw new IllegalArgumentException("Discount percent must be in the range of 0 - 100");
+        }
+
         StringBuilder stringBuilder = new StringBuilder();
+        Tool tool = toolsMap.get(toolCode);//TODO check if existing
 
         stringBuilder.append("Tool code: ");
         stringBuilder.append(tool.getToolCode());
@@ -53,21 +62,21 @@ public class Inventory {
         stringBuilder.append(dateFormat.format(dueDate.getTime()));
         stringBuilder.append("\n");
 
-//        stringBuilder.append("Daily rental charge: ");
-//        stringBuilder.append();
-//        stringBuilder.append("\n");
+        stringBuilder.append("Daily rental charge: ");
+        stringBuilder.append(NumberFormat.getCurrencyInstance().format(tool.getToolType().getDailyCharge()));
+        stringBuilder.append("\n");
 
 //        stringBuilder.append("Charge days: ");
 //        stringBuilder.append();
 //        stringBuilder.append("\n");
 
-//        stringBuilder.append("Pre-discount charge: ");
-//        stringBuilder.append();
-//        stringBuilder.append("\n");
+        stringBuilder.append("Pre-discount charge: ");
+        stringBuilder.append(NumberFormat.getCurrencyInstance().format(5.99f));//TODO temp
+        stringBuilder.append("\n");
 
-//        stringBuilder.append("Discount percent: ");
-//        stringBuilder.append();
-//        stringBuilder.append("\n");
+        stringBuilder.append("Discount percent: ");
+        stringBuilder.append(String.format("%d%%",discountPercent));
+        stringBuilder.append("\n");
 
 //        stringBuilder.append("Discount amount: ");
 //        stringBuilder.append();
@@ -79,12 +88,10 @@ public class Inventory {
 
         return stringBuilder.toString();
         /*
-● Daily rental charge - Amount per day, specified by the tool type.
 ● Charge days - Count of chargeable days, from day after checkout through and including due
 date, excluding “no charge” days as specified by the tool type.
 ● Pre-discount charge - Calculated as charge days X daily charge. Resulting total rounded half up
 to cents.
-● Discount percent - Specified at checkout.
 ● Discount amount - calculated from discount % and pre-discount charge. Resulting amount
 rounded half up to cents.
 ● Final charge - Calculated as pre-discount charge - discount amount.
