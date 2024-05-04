@@ -27,18 +27,29 @@ public class Inventory {
     }
 
     public void addHoliday(LocalDate holiday) {
-        holidayMap.put(holiday.toString(), holiday);//TODO update logic
+        String holidayKey = DateHelper.getHolidayKey(holiday);
+        holidayMap.put(holidayKey, holiday);
     }
 
 //    ● Charge days - Count of chargeable days, from day after checkout through and including due
 //    date, excluding “no charge” days as specified by the tool type.
-    private int getChargeDays(LocalDate checkoutDate, LocalDate dueDate) {
+    protected int getChargeDays(LocalDate checkoutDate, LocalDate dueDate, ToolType toolType) {
         int chargeDays = 0;
         LocalDate startDate = checkoutDate.plusDays(1);
         LocalDate endDate = dueDate.plusDays(1);
 
         for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+            int dayOfWeek = date.getDayOfWeek().getValue();
 
+            if(toolType.isHolidayChargeable() && holidayMap.get(DateHelper.getHolidayKey(date)) != null) {
+                chargeDays++;
+            }
+            else if(toolType.isWeekendChargeable() && dayOfWeek == 1 || dayOfWeek == 7) {
+                chargeDays++;
+            }
+            else {
+                chargeDays++;
+            }
         }
 
         return chargeDays;
@@ -87,8 +98,8 @@ public class Inventory {
         stringBuilder.append(NumberFormat.getCurrencyInstance().format(dailyCharge));
         stringBuilder.append("\n");
 
-//        int chargeDays = getChargeDays(checkoutDate, dueDate);
-        int chargeDays = 2;//TEMP
+        int chargeDays = getChargeDays(checkoutDate, dueDate, tool.getToolType());
+//        int chargeDays = 2;//TEMP
         stringBuilder.append("Charge days: ");
         stringBuilder.append(chargeDays);
         stringBuilder.append("\n");

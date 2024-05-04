@@ -7,16 +7,18 @@ import java.util.Locale;
 public class DateHelper {
     private static final Calendar cacheCalendar = new GregorianCalendar();
 
-    public static int getFirstMondayOfSeptember(int year) {
+    //getFirstMondayOfSeptember
+    public static LocalDate getLaborDay(int year) {
         cacheCalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         cacheCalendar.set(Calendar.DAY_OF_WEEK_IN_MONTH, 1);
         cacheCalendar.set(Calendar.MONTH, Calendar.SEPTEMBER);
         cacheCalendar.set(Calendar.YEAR, year);
 
-        return cacheCalendar.get(Calendar.DAY_OF_MONTH);
+//        return cacheCalendar.get(Calendar.DAY_OF_MONTH);
+        return LocalDate.of(year, 9, cacheCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
-    public static LocalDate getObservedIndependenceDayOfWeek(int year) {
+    public static LocalDate getObservedIndependenceDay(int year) {
         LocalDate observedDate = LocalDate.of(year, 7, 4);
 
         if("Saturday".equalsIgnoreCase(observedDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US))) {
@@ -26,9 +28,13 @@ public class DateHelper {
             observedDate = observedDate.plusDays(1);
         }
 
-        System.out.println("test: " + observedDate.getDayOfWeek().getValue());
-        System.out.println("test: " + observedDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US));
+//        System.out.println("test: " + observedDate.getDayOfWeek().getValue());
+//        System.out.println("test: " + observedDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US));
 
         return observedDate;
+    }
+
+    public static String getHolidayKey(LocalDate holiday) {
+        return String.valueOf(holiday.getMonthValue()) + holiday.getDayOfMonth();
     }
 }

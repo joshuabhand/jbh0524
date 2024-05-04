@@ -29,7 +29,7 @@ public class ToolType {
         this.dailyCharge = dailyCharge;
     }
 
-    public boolean getWeekdayCharge() {
+    public boolean isWeekdayChargeable() {
         return weekdayCharge;
     }
 
@@ -37,7 +37,7 @@ public class ToolType {
         this.weekdayCharge = weekdayCharge;
     }
 
-    public boolean getWeekendCharge() {
+    public boolean isWeekendChargeable() {
         return weekendCharge;
     }
 
@@ -45,7 +45,7 @@ public class ToolType {
         this.weekendCharge = weekendCharge;
     }
 
-    public boolean getHolidayCharge() {
+    public boolean isHolidayChargeable() {
         return holidayCharge;
     }
 
