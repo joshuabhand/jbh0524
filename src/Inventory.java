@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class Inventory {
     private static Inventory inventory;
-    private final Map<String, Tool> toolsMap;
-    private final Map<String, LocalDate> holidayMap;//TODO use int instead of String as key?
+    protected final Map<String, Tool> toolsMap;
+    protected final Map<String, LocalDate> holidayMap;
 
     private Inventory() {
         toolsMap = new HashMap<>();
@@ -39,15 +39,16 @@ public class Inventory {
         LocalDate endDate = dueDate.plusDays(1);
 
         for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
-            int dayOfWeek = date.getDayOfWeek().getValue();
+            String dayOfWeek = date.getDayOfWeek().toString();
+            boolean isWeekend = "Sunday".equalsIgnoreCase(dayOfWeek) || "Saturday".equalsIgnoreCase(dayOfWeek);
 
             if(toolType.isHolidayChargeable() && holidayMap.get(DateHelper.getHolidayKey(date)) != null) {
                 chargeDays++;
             }
-            else if(toolType.isWeekendChargeable() && dayOfWeek == 1 || dayOfWeek == 7) {
+            else if(toolType.isWeekendChargeable() && isWeekend) {
                 chargeDays++;
             }
-            else {
+            else if(toolType.isWeekdayChargeable() && !isWeekend) {
                 chargeDays++;
             }
         }
@@ -66,7 +67,7 @@ public class Inventory {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy");
 
         StringBuilder stringBuilder = new StringBuilder();
-        Tool tool = toolsMap.get(toolCode);//TODO check if existing
+        Tool tool = toolsMap.get(toolCode);
 
         stringBuilder.append("Tool code: ");
         stringBuilder.append(tool.getToolCode());
@@ -99,7 +100,6 @@ public class Inventory {
         stringBuilder.append("\n");
 
         int chargeDays = getChargeDays(checkoutDate, dueDate, tool.getToolType());
-//        int chargeDays = 2;//TEMP
         stringBuilder.append("Charge days: ");
         stringBuilder.append(chargeDays);
         stringBuilder.append("\n");
