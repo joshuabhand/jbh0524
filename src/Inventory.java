@@ -41,14 +41,15 @@ public class Inventory {
         for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
             String dayOfWeek = date.getDayOfWeek().toString();
             boolean isWeekend = "Sunday".equalsIgnoreCase(dayOfWeek) || "Saturday".equalsIgnoreCase(dayOfWeek);
+            boolean isHoliday = holidayMap.get(DateHelper.getHolidayKey(date)) != null;
 
-            if(toolType.isHolidayChargeable() && holidayMap.get(DateHelper.getHolidayKey(date)) != null) {
+            if(toolType.isHolidayChargeable() && isHoliday) {
                 chargeDays++;
             }
             else if(toolType.isWeekendChargeable() && isWeekend) {
                 chargeDays++;
             }
-            else if(toolType.isWeekdayChargeable() && !isWeekend) {
+            else if(toolType.isWeekdayChargeable() && !isWeekend && !isHoliday) {
                 chargeDays++;
             }
         }
@@ -110,7 +111,7 @@ public class Inventory {
         stringBuilder.append("\n");
 
         stringBuilder.append("Discount percent: ");
-        stringBuilder.append(String.format("%d%%",discountPercent));
+        stringBuilder.append(String.format("%d%%", discountPercent));
         stringBuilder.append("\n");
 
         float discountAmount = ((float) discountPercent / 100) * preDiscountCharge;

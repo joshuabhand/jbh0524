@@ -82,7 +82,7 @@ public class InventoryTest {
         inventory.addTool(toolLadder);
         inventory.addHoliday(LocalDate.of(2024, 7, 4));
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolTypeLadder);
-        assertEquals(2, chargeDays);
+        assertEquals(1, chargeDays);
     }
 
     @Test

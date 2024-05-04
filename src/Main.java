@@ -9,17 +9,25 @@ public class Main {
         inventory.addHoliday(DateHelper.getLaborDay(currentYear));
 
         ToolType toolTypeLadder = new ToolType("Ladder", 1.99f, true, true, false);
+        ToolType toolTypeChainsaw = new ToolType("Ladder", 1.49f, true, false, true);
+        ToolType toolTypeJackhammer = new ToolType("Jackhammer", 2.99f, true, false, false);
+
         Tool toolLadder = new Tool("LADW", toolTypeLadder, "Werner");
+        Tool toolChainsaw = new Tool("CHNS", toolTypeChainsaw, "Stihl");
+        Tool toolJackhammer = new Tool("JAKD", toolTypeJackhammer, "DeWalt");
+        Tool toolJackhammer2 = new Tool("JAKR", toolTypeJackhammer, "Ridgid");
+
         inventory.addTool(toolLadder);
+        inventory.addTool(toolChainsaw);
+        inventory.addTool(toolJackhammer);
+        inventory.addTool(toolJackhammer2);
 
-        String checkoutLadderRental;
         try {
-            checkoutLadderRental = inventory.checkout("LADW", 5, 20, LocalDate.of(2024, 5, 3));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            String checkoutLadderRental = inventory.checkout("LADW", 5, 20, LocalDate.of(2024, 5, 3));
+            System.out.println(checkoutLadderRental);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
-
-        System.out.println(checkoutLadderRental);
     }
 }
 
