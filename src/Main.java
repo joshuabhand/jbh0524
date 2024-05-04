@@ -1,17 +1,22 @@
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
         Inventory inventory = Inventory.getInstance();
 
+//        ● Independence Day, July 4th - If falls on weekend, it is observed on the closest weekday (if Sat,
+//                then Friday before, if Sunday, then Monday after)
+//● Labor Day - First Monday in September
+//        inventory.addHoliday(LocalDate.of(9999, 7, 4));
+//        inventory.addHoliday(LocalDate.of(9999, 7, 4));
+
         ToolType toolTypeLadder = new ToolType("Ladder", 1.99f, true, true, false);
         Tool toolLadder = new Tool("LADW", toolTypeLadder, "Werner");
-        inventory.addNewTool(toolLadder);
+        inventory.addTool(toolLadder);
 
         String checkoutLadderRental;
         try {
-            checkoutLadderRental = inventory.checkout("LADW", 5, 20, new GregorianCalendar(2024, Calendar.MAY, 3));
+            checkoutLadderRental = inventory.checkout("LADW", 5, 20, LocalDate.of(2024, 5, 3));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
