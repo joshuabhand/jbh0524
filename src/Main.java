@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.GregorianCalendar;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,6 +11,17 @@ public class Main {
 //        inventory.addHoliday(LocalDate.of(9999, 7, 4));
 //        inventory.addHoliday(LocalDate.of(9999, 7, 4));
 
+        int year = 2020;
+        LocalDate date = LocalDate.of(year, 7, 4);
+
+        System.out.println("4th of July: " + date.getDayOfWeek());
+        System.out.println("Observed 4th: " + DateHelper.getObservedIndependenceDayOfWeek(year).getDayOfWeek());
+        System.out.println();
+        LocalDate date2 = LocalDate.of(year, 9, 2);
+        System.out.println("First Monday of September: " + DateHelper.getFirstMondayOfSeptember(year));
+        System.out.println("Correct Monday of September: " + date2.getDayOfMonth());
+
+
         ToolType toolTypeLadder = new ToolType("Ladder", 1.99f, true, true, false);
         Tool toolLadder = new Tool("LADW", toolTypeLadder, "Werner");
         inventory.addTool(toolLadder);
@@ -20,6 +32,7 @@ public class Main {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        System.out.println(checkoutLadderRental);
+
+//        System.out.println(checkoutLadderRental);
     }
 }
