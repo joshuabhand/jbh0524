@@ -154,7 +154,7 @@ public class Inventory {
         int chargeDays = getChargeDays(checkoutDate, dueDate, toolType);
         rentalAgreement.add("Charge days: " + chargeDays);
 
-        // Calculated as charge days X daily charge. Resulting total rounded half up to cents. //TODO what does this mean?
+        // Calculated as charge days X daily charge. Resulting total rounded half up to cents.
         float preDiscountCharge = chargeDays * dailyCharge;
         rentalAgreement.add("Pre-discount charge: " + numberFormat.format(preDiscountCharge));
 
