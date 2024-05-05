@@ -5,15 +5,16 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class DateHelper {
-    private static final Calendar cacheCalendar = new GregorianCalendar();
 
     public static LocalDate getLaborDay(int year) {
-        cacheCalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        cacheCalendar.set(Calendar.DAY_OF_WEEK_IN_MONTH, 1);
-        cacheCalendar.set(Calendar.MONTH, Calendar.SEPTEMBER);
-        cacheCalendar.set(Calendar.YEAR, year);
+        Calendar calendar = new GregorianCalendar();
 
-        return LocalDate.of(year, 9, cacheCalendar.get(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        calendar.set(Calendar.DAY_OF_WEEK_IN_MONTH, 1);
+        calendar.set(Calendar.MONTH, Calendar.SEPTEMBER);
+        calendar.set(Calendar.YEAR, year);
+
+        return LocalDate.of(year, 9, calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     public static LocalDate getObservedIndependenceDay(int year) {
