@@ -38,6 +38,25 @@ public class Inventory {
     }
 
     /**
+     * This is a convenience method to prevent redundant testing data.
+     */
+    public void initializeInventory() {
+        ToolType toolTypeLadder = new ToolType(ToolType.TOOL_NAME_LADDER, 1.99f, true, true, false);
+        ToolType toolTypeChainsaw = new ToolType(ToolType.TOOL_NAME_CHAINSAW, 1.49f, true, false, true);
+        ToolType toolTypeJackhammer = new ToolType(ToolType.TOOL_NAME_JACKHAMMER, 2.99f, true, false, false);
+
+        Tool toolLadder = new Tool(Tool.TOOL_CODE_LADW, toolTypeLadder, Tool.TOOL_BRAND_WERNER);
+        Tool toolChainsaw = new Tool(Tool.TOOL_CODE_CHNS, toolTypeChainsaw, Tool.TOOL_BRAND_STIHL);
+        Tool toolJackhammer = new Tool(Tool.TOOL_CODE_JAKD, toolTypeJackhammer, Tool.TOOL_BRAND_DEWALT);
+        Tool toolJackhammer2 = new Tool(Tool.TOOL_CODE_JAKR, toolTypeJackhammer, Tool.TOOL_BRAND_RIDGID);
+
+        inventory.addTool(toolLadder);
+        inventory.addTool(toolChainsaw);
+        inventory.addTool(toolJackhammer);
+        inventory.addTool(toolJackhammer2);
+    }
+
+    /**
      * Add holiday to the list of holidays for inventory.
      *
      * @param tool tool to be added to the inventory of tools
