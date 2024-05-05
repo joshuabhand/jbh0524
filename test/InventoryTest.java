@@ -32,8 +32,8 @@ public class InventoryTest {
     public void testChargeDaysOnWeekdays() {
         LocalDate checkoutDate = LocalDate.of(2024, 5, 6);
         LocalDate dueDate = checkoutDate.plusDays(3);
-        ToolType toolTypeLadder = new ToolType("Ladder", 1, true, true, false);
-        Tool toolLadder = new Tool("LADW", toolTypeLadder, "Werner");
+        ToolType toolTypeLadder = new ToolType(ToolType.TOOL_NAME_LADDER, 1, true, true, false);
+        Tool toolLadder = new Tool(Tool.TOOL_CODE_LADDER, toolTypeLadder, Tool.TOOL_BRAND_WERNER);
         inventory.addTool(toolLadder);
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolTypeLadder);
         assertEquals(3, chargeDays);
@@ -43,8 +43,8 @@ public class InventoryTest {
     public void testChargeDaysOnWeekends() {
         LocalDate checkoutDate = LocalDate.of(2024, 5, 3);
         LocalDate dueDate = checkoutDate.plusDays(3);
-        ToolType toolTypeLadder = new ToolType("Ladder", 1, true, true, false);
-        Tool toolLadder = new Tool("LADW", toolTypeLadder, "Werner");
+        ToolType toolTypeLadder = new ToolType(ToolType.TOOL_NAME_LADDER, 1, true, true, false);
+        Tool toolLadder = new Tool(Tool.TOOL_CODE_LADDER, toolTypeLadder, Tool.TOOL_BRAND_WERNER);
         inventory.addTool(toolLadder);
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolTypeLadder);
         assertEquals(3, chargeDays);
@@ -54,8 +54,8 @@ public class InventoryTest {
     public void testChargeDaysNotOnWeekends() {
         LocalDate checkoutDate = LocalDate.of(2024, 5, 3);
         LocalDate dueDate = checkoutDate.plusDays(3);
-        ToolType toolTypeLadder = new ToolType("Jackhammer", 1, true, false, false);
-        Tool toolLadder = new Tool("JAKR", toolTypeLadder, "Ridgid");
+        ToolType toolTypeLadder = new ToolType(ToolType.TOOL_NAME_JACKHAMMER, 1, true, false, false);
+        Tool toolLadder = new Tool(Tool.TOOL_CODE_JACKHAMMER_R, toolTypeLadder, Tool.TOOL_BRAND_RIDGID);
         inventory.addTool(toolLadder);
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolTypeLadder);
         assertEquals(1, chargeDays);
@@ -65,8 +65,8 @@ public class InventoryTest {
     public void testChargeDaysOnHolidays() {
         LocalDate checkoutDate = LocalDate.of(2024, 7, 3);
         LocalDate dueDate = checkoutDate.plusDays(2);
-        ToolType toolTypeLadder = new ToolType("Chainsaw", 1, false, false, true);
-        Tool toolLadder = new Tool("CHNS", toolTypeLadder, "Stihl");
+        ToolType toolTypeLadder = new ToolType(ToolType.TOOL_NAME_CHAINSAW, 1, false, false, true);
+        Tool toolLadder = new Tool(Tool.TOOL_CODE_CHAINSAW, toolTypeLadder, Tool.TOOL_BRAND_STIHL);
         inventory.addTool(toolLadder);
         inventory.addHoliday(LocalDate.of(2024, 7, 4));
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolTypeLadder);
@@ -77,8 +77,8 @@ public class InventoryTest {
     public void testChargeDaysNotOnHolidays() {
         LocalDate checkoutDate = LocalDate.of(2024, 7, 3);
         LocalDate dueDate = checkoutDate.plusDays(2);
-        ToolType toolTypeLadder = new ToolType("Chainsaw", 1, true, false, false);
-        Tool toolLadder = new Tool("CHNS", toolTypeLadder, "Stihl");
+        ToolType toolTypeLadder = new ToolType(ToolType.TOOL_NAME_CHAINSAW, 1, true, false, false);
+        Tool toolLadder = new Tool(Tool.TOOL_CODE_CHAINSAW, toolTypeLadder, Tool.TOOL_BRAND_STIHL);
         inventory.addTool(toolLadder);
         inventory.addHoliday(LocalDate.of(2024, 7, 4));
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolTypeLadder);
@@ -88,17 +88,17 @@ public class InventoryTest {
     @Test
     public void testCheckout() {
         LocalDate checkoutDate = LocalDate.of(2024, 7, 3);
-        ToolType toolTypeLadder = new ToolType("Chainsaw", 1, true, false, false);
-        Tool toolLadder = new Tool("CHNS", toolTypeLadder, "Stihl");
+        ToolType toolTypeLadder = new ToolType(ToolType.TOOL_NAME_CHAINSAW, 1, true, false, false);
+        Tool toolLadder = new Tool(Tool.TOOL_CODE_CHAINSAW, toolTypeLadder, Tool.TOOL_BRAND_STIHL);
         inventory.addTool(toolLadder);
-        String printout = inventory.checkout("CHNS", 3, 20, checkoutDate);
+        String printout = inventory.checkout(Tool.TOOL_CODE_CHAINSAW, 3, 20, checkoutDate);
         assertNotNull(printout);
     }
 
     @Test
     public void testCheckoutWithInvalidRentalDayCount() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            inventory.checkout("CHNS", 0, 20, null);
+            inventory.checkout(Tool.TOOL_CODE_CHAINSAW, 0, 20, null);
         });
 
         String expectedMessage = "Rental day count must be 1 or greater";
@@ -110,7 +110,7 @@ public class InventoryTest {
     @Test
     public void testCheckoutWithInvalidDiscount() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            inventory.checkout("CHNS", 1, 120, null);
+            inventory.checkout(Tool.TOOL_CODE_CHAINSAW, 1, 120, null);
         });
 
         String expectedMessage = "Discount percent must be in the range of 0 - 100";

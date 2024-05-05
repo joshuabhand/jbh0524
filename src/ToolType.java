@@ -1,4 +1,8 @@
 public class ToolType {
+    public static final String TOOL_NAME_LADDER = "Ladder";
+    public static final String TOOL_NAME_CHAINSAW = "Chainsaw";
+    public static final String TOOL_NAME_JACKHAMMER = "Jackhammer";
+
     private String toolTypeName;
     private float dailyCharge;
     private boolean weekdayCharge;

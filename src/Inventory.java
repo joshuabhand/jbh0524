@@ -74,7 +74,7 @@ public class Inventory {
 
         rentalAgreement.add("Tool code: " + tool.getToolCode());
         rentalAgreement.add("Tool type: " + tool.getToolType().getToolTypeName());
-        rentalAgreement.add("Tool brand: " + tool.getBrand());
+        rentalAgreement.add("Tool brand: " + tool.getToolBrand());
         rentalAgreement.add("Rental days: " + rentalDayCount);
         rentalAgreement.add("Check out date: " + checkoutDate.format(dateTimeFormatter));
 
