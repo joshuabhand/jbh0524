@@ -20,7 +20,7 @@ public class Inventory {
 
     /**
      * This field maintains the holiday list with month/day as key i.e. "74" as "July 4"
-     * and a date as the value.
+     * and a date as the value. This key is obtained via {@link DateHelper}
      */
     protected final Map<String, LocalDate> holidayMap;
 
