@@ -1,7 +1,9 @@
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Inventory {
@@ -67,63 +69,37 @@ public class Inventory {
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy");
 
-        StringBuilder stringBuilder = new StringBuilder();
         Tool tool = toolsMap.get(toolCode);
+        List<String> rentalAgreement = new ArrayList<>();
 
-        stringBuilder.append("Tool code: ");
-        stringBuilder.append(tool.getToolCode());
-        stringBuilder.append("\n");
-
-        stringBuilder.append("Tool type: ");
-        stringBuilder.append(tool.getToolType().getToolTypeName());
-        stringBuilder.append("\n");
-
-        stringBuilder.append("Tool brand: ");
-        stringBuilder.append(tool.getBrand());
-        stringBuilder.append("\n");
-
-        stringBuilder.append("Rental days: ");
-        stringBuilder.append(rentalDayCount);
-        stringBuilder.append("\n");
-
-        stringBuilder.append("Check out date: ");
-        stringBuilder.append(checkoutDate.format(dateTimeFormatter));
-        stringBuilder.append("\n");
+        rentalAgreement.add("Tool code: " + tool.getToolCode());
+        rentalAgreement.add("Tool type: " + tool.getToolType().getToolTypeName());
+        rentalAgreement.add("Tool brand: " + tool.getBrand());
+        rentalAgreement.add("Rental days: " + rentalDayCount);
+        rentalAgreement.add("Check out date: " + checkoutDate.format(dateTimeFormatter));
 
         LocalDate dueDate = checkoutDate.plusDays(rentalDayCount);
-        stringBuilder.append("Due date: ");
-        stringBuilder.append(dueDate.format(dateTimeFormatter));
-        stringBuilder.append("\n");
+        rentalAgreement.add("Due date: " + dueDate.format(dateTimeFormatter));
 
         float dailyCharge = tool.getToolType().getDailyCharge();
-        stringBuilder.append("Daily rental charge: ");
-        stringBuilder.append(NumberFormat.getCurrencyInstance().format(dailyCharge));
-        stringBuilder.append("\n");
+        rentalAgreement.add("Daily rental charge: " + NumberFormat.getCurrencyInstance().format(dailyCharge));
 
         int chargeDays = getChargeDays(checkoutDate, dueDate, tool.getToolType());
-        stringBuilder.append("Charge days: ");
-        stringBuilder.append(chargeDays);
-        stringBuilder.append("\n");
+        rentalAgreement.add("Charge days: " + chargeDays);
 
         float preDiscountCharge = chargeDays * dailyCharge;
-        stringBuilder.append("Pre-discount charge: ");
-        stringBuilder.append(NumberFormat.getCurrencyInstance().format(preDiscountCharge));
-        stringBuilder.append("\n");
+        rentalAgreement.add("Pre-discount charge: " + NumberFormat.getCurrencyInstance().format(preDiscountCharge));
 
-        stringBuilder.append("Discount percent: ");
-        stringBuilder.append(String.format("%d%%", discountPercent));
-        stringBuilder.append("\n");
+        rentalAgreement.add("Discount percent: " + String.format("%d%%", discountPercent));
 
         float discountAmount = ((float) discountPercent / 100) * preDiscountCharge;
-        stringBuilder.append("Discount amount: ");
-        stringBuilder.append(NumberFormat.getCurrencyInstance().format(discountAmount));
-        stringBuilder.append("\n");
+        rentalAgreement.add("Discount amount: " + NumberFormat.getCurrencyInstance().format(discountAmount));
 
-        stringBuilder.append("Final charge: ");
-        stringBuilder.append(NumberFormat.getCurrencyInstance().format(preDiscountCharge - discountAmount));
-        stringBuilder.append("\n");
+        rentalAgreement.add("Final charge: " + NumberFormat.getCurrencyInstance().format(preDiscountCharge - discountAmount));
 
-        return stringBuilder.toString();
+        return String.join("\n", rentalAgreement);
+    }
+}
         /*
 
 ● Pre-discount charge - Calculated as charge days X daily charge. Resulting total rounded half up
@@ -137,5 +113,3 @@ with formatting as follows:
 ● Currency $9,999.99
 ● Percent 99%
         * */
-    }
-}
