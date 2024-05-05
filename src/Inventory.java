@@ -115,10 +115,11 @@ public class Inventory {
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 
         Tool tool = toolsMap.get(toolCode);
+        ToolType toolType = tool.getToolType();
         List<String> rentalAgreement = new ArrayList<>();
 
         rentalAgreement.add("Tool code: " + tool.getToolCode());
-        rentalAgreement.add("Tool type: " + tool.getToolType().getToolTypeName());
+        rentalAgreement.add("Tool type: " + toolType.getToolTypeName());
         rentalAgreement.add("Tool brand: " + tool.getToolBrand());
         rentalAgreement.add("Rental days: " + rentalDayCount);
         rentalAgreement.add("Check out date: " + checkoutDate.format(dateTimeFormatter));
@@ -128,10 +129,10 @@ public class Inventory {
         rentalAgreement.add("Due date: " + dueDate.format(dateTimeFormatter));
 
         // Amount per day, specified by the tool type.
-        float dailyCharge = tool.getToolType().getDailyCharge();
+        float dailyCharge = toolType.getDailyCharge();
         rentalAgreement.add("Daily rental charge: " + numberFormat.format(dailyCharge));
 
-        int chargeDays = getChargeDays(checkoutDate, dueDate, tool.getToolType());
+        int chargeDays = getChargeDays(checkoutDate, dueDate, toolType);
         rentalAgreement.add("Charge days: " + chargeDays);
 
         // Calculated as charge days X daily charge. Resulting total rounded half up to cents. //TODO what does this mean?

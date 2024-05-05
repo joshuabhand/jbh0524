@@ -12,10 +12,10 @@ public class Main {
         ToolType toolTypeChainsaw = new ToolType(ToolType.TOOL_NAME_CHAINSAW, 1.49f, true, false, true);
         ToolType toolTypeJackhammer = new ToolType(ToolType.TOOL_NAME_JACKHAMMER, 2.99f, true, false, false);
 
-        Tool toolLadder = new Tool(Tool.TOOL_CODE_LADDER, toolTypeLadder, Tool.TOOL_BRAND_WERNER);
-        Tool toolChainsaw = new Tool(Tool.TOOL_CODE_CHAINSAW, toolTypeChainsaw, Tool.TOOL_BRAND_STIHL);
-        Tool toolJackhammer = new Tool(Tool.TOOL_CODE_JACKHAMMER_D, toolTypeJackhammer, Tool.TOOL_BRAND_DEWALT);
-        Tool toolJackhammer2 = new Tool(Tool.TOOL_CODE_JACKHAMMER_R, toolTypeJackhammer, Tool.TOOL_BRAND_RIDGID);
+        Tool toolLadder = new Tool(Tool.TOOL_CODE_LADW, toolTypeLadder, Tool.TOOL_BRAND_WERNER);
+        Tool toolChainsaw = new Tool(Tool.TOOL_CODE_CHNS, toolTypeChainsaw, Tool.TOOL_BRAND_STIHL);
+        Tool toolJackhammer = new Tool(Tool.TOOL_CODE_JAKD, toolTypeJackhammer, Tool.TOOL_BRAND_DEWALT);
+        Tool toolJackhammer2 = new Tool(Tool.TOOL_CODE_JAKR, toolTypeJackhammer, Tool.TOOL_BRAND_RIDGID);
 
         inventory.addTool(toolLadder);
         inventory.addTool(toolChainsaw);
@@ -23,7 +23,7 @@ public class Main {
         inventory.addTool(toolJackhammer2);
 
         try {
-            String checkoutLadderRental = inventory.checkout(Tool.TOOL_CODE_LADDER, 5, 20, LocalDate.of(2024, 5, 3));
+            String checkoutLadderRental = inventory.checkout(Tool.TOOL_CODE_LADW, 5, 20, LocalDate.of(2024, 5, 3));
             System.out.println(checkoutLadderRental);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());

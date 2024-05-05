@@ -25,10 +25,10 @@ public class AcceptanceTest {
         ToolType toolTypeChainsaw = new ToolType(ToolType.TOOL_NAME_CHAINSAW, 1.49f, true, false, true);
         ToolType toolTypeJackhammer = new ToolType(ToolType.TOOL_NAME_JACKHAMMER, 2.99f, true, false, false);
 
-        Tool toolLadder = new Tool(Tool.TOOL_CODE_LADDER, toolTypeLadder, Tool.TOOL_BRAND_WERNER);
-        Tool toolChainsaw = new Tool(Tool.TOOL_CODE_CHAINSAW, toolTypeChainsaw, Tool.TOOL_BRAND_STIHL);
-        Tool toolJackhammer = new Tool(Tool.TOOL_CODE_JACKHAMMER_D, toolTypeJackhammer, Tool.TOOL_BRAND_DEWALT);
-        Tool toolJackhammer2 = new Tool(Tool.TOOL_CODE_JACKHAMMER_R, toolTypeJackhammer, Tool.TOOL_BRAND_RIDGID);
+        Tool toolLadder = new Tool(Tool.TOOL_CODE_LADW, toolTypeLadder, Tool.TOOL_BRAND_WERNER);
+        Tool toolChainsaw = new Tool(Tool.TOOL_CODE_CHNS, toolTypeChainsaw, Tool.TOOL_BRAND_STIHL);
+        Tool toolJackhammer = new Tool(Tool.TOOL_CODE_JAKD, toolTypeJackhammer, Tool.TOOL_BRAND_DEWALT);
+        Tool toolJackhammer2 = new Tool(Tool.TOOL_CODE_JAKR, toolTypeJackhammer, Tool.TOOL_BRAND_RIDGID);
 
         inventory.addTool(toolLadder);
         inventory.addTool(toolChainsaw);
@@ -40,7 +40,7 @@ public class AcceptanceTest {
     public void test1() {
         LocalDate checkoutDate = LocalDate.of(2015, 9, 3);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            inventory.checkout(Tool.TOOL_CODE_JACKHAMMER_R, 5, 101, checkoutDate);
+            inventory.checkout(Tool.TOOL_CODE_JAKR, 5, 101, checkoutDate);
         });
 
         String expectedMessage = "Discount percent must be in the range of 0 - 100";
@@ -59,7 +59,7 @@ public class AcceptanceTest {
         LocalDate independenceDay = inventory.holidayMap.get(DateHelper.getHolidayKey(DateHelper.getObservedIndependenceDay(2020)));
         assertNotNull(independenceDay);
 
-        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_LADDER).getToolType();
+        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_LADW).getToolType();
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolType);
         assertEquals(2, chargeDays);
 
@@ -86,7 +86,7 @@ public class AcceptanceTest {
         LocalDate independenceDay = inventory.holidayMap.get(DateHelper.getHolidayKey(DateHelper.getObservedIndependenceDay(2015)));
         assertNotNull(independenceDay);
 
-        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_CHAINSAW).getToolType();
+        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_CHNS).getToolType();
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolType);
         assertEquals(3, chargeDays);
 
@@ -113,7 +113,7 @@ public class AcceptanceTest {
         LocalDate laborDay = inventory.holidayMap.get(DateHelper.getHolidayKey(DateHelper.getLaborDay(2015)));
         assertNotNull(laborDay);
 
-        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_JACKHAMMER_D).getToolType();
+        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_JAKD).getToolType();
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolType);
         assertEquals(3, chargeDays);
 
@@ -140,7 +140,7 @@ public class AcceptanceTest {
         LocalDate independenceDay = inventory.holidayMap.get(DateHelper.getHolidayKey(DateHelper.getObservedIndependenceDay(2015)));
         assertNotNull(independenceDay);
 
-        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_JACKHAMMER_R).getToolType();
+        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_JAKR).getToolType();
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolType);
         assertEquals(5, chargeDays);
 
@@ -167,7 +167,7 @@ public class AcceptanceTest {
         LocalDate independenceDay = inventory.holidayMap.get(DateHelper.getHolidayKey(DateHelper.getObservedIndependenceDay(2020)));
         assertNotNull(independenceDay);
 
-        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_JACKHAMMER_R).getToolType();
+        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_JAKR).getToolType();
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolType);
         assertEquals(1, chargeDays);
 

@@ -2,10 +2,10 @@
  * This class is a POJO representing the Tool object.
  */
 public class Tool {
-    public static final String TOOL_CODE_LADDER = "LADW";
-    public static final String TOOL_CODE_CHAINSAW = "CHNS";
-    public static final String TOOL_CODE_JACKHAMMER_D = "JAKD";
-    public static final String TOOL_CODE_JACKHAMMER_R = "JAKR";
+    public static final String TOOL_CODE_LADW = "LADW";
+    public static final String TOOL_CODE_CHNS = "CHNS";
+    public static final String TOOL_CODE_JAKD = "JAKD";
+    public static final String TOOL_CODE_JAKR = "JAKR";
 
     public static final String TOOL_BRAND_STIHL = "Stihl";
     public static final String TOOL_BRAND_WERNER = "Werner";
