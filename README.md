@@ -1,14 +1,14 @@
-Rental format:
-
-Tool code: LADW
-Tool type: Ladder
-Tool brand: Werner
-Rental days: 5
-Check out date: 05/03/24
-Due date: 05/08/24
-Daily rental charge: $1.99
-Charge days: 5
-Pre-discount charge: $9.95
-Discount percent: 20%
-Discount amount: $1.99
-Final charge: $7.96
+Rental format:<br />
+<br />
+Tool code: LADW<br />
+Tool type: Ladder<br />
+Tool brand: Werner<br />
+Rental days: 5<br />
+Check out date: 05/03/24<br />
+Due date: 05/08/24<br />
+Daily rental charge: $1.99<br />
+Charge days: 5<br />
+Pre-discount charge: $9.95<br />
+Discount percent: 20%<br />
+Discount amount: $1.99<br />
+Final charge: $7.96<br />
