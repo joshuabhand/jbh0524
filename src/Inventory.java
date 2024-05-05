@@ -6,9 +6,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The inventory class maintains the tool and holiday list.
+ * It's currently a singleton to ensure one data source for tools and holidays.
+ */
 public class Inventory {
     private static Inventory inventory;
+
+    /**
+     * This field maintains the tools with the tool code as a key and the {@link Tool} object as a value
+     */
     protected final Map<String, Tool> toolsMap;
+
+    /**
+     * This field maintains the holiday list with month/day as key i.e. "74" as "July 4"
+     * and a date as the value.
+     */
     protected final Map<String, LocalDate> holidayMap;
 
     private Inventory() {
@@ -24,17 +37,35 @@ public class Inventory {
         return inventory;
     }
 
+    /**
+     * Add holiday to the list of holidays for inventory.
+     *
+     * @param tool tool to be added to the inventory of tools
+     */
     public void addTool(Tool tool) {
         toolsMap.put(tool.getToolCode(), tool);
     }
 
+    /**
+     * Add holiday to the collection of holidays for inventory.
+     *
+     * @param holiday holiday to be added
+     */
     public void addHoliday(LocalDate holiday) {
         String holidayKey = DateHelper.getHolidayKey(holiday);
         holidayMap.put(holidayKey, holiday);
     }
 
-//    ● Charge days - Count of chargeable days, from day after checkout through and including due
-//    date, excluding “no charge” days as specified by the tool type.
+    /**
+     * Count of chargeable days, from day after checkout through and including due
+     * date, excluding “no charge” days as specified by the tool type.
+     *
+     * @param checkoutDate the date the tool is checked out
+     * @param dueDate the date the tool is due for
+     * @param toolType the tool type being checked out
+     *
+     * @return the number of days to charge for
+     */
     protected int getChargeDays(LocalDate checkoutDate, LocalDate dueDate, ToolType toolType) {
         int chargeDays = 0;
         LocalDate startDate = checkoutDate.plusDays(1);
@@ -59,6 +90,16 @@ public class Inventory {
         return chargeDays;
     }
 
+    /**
+     * Checkout generates a Rental Agreement with the tool details, the charge days and the amount due.
+     *
+     * @param toolCode the code for which tool to check out
+     * @param rentalDayCount the amount of days to check out the tool
+     * @param discountPercent the discount value for the transaction
+     * @param checkoutDate the date the tool is checked out
+     *
+     * @return the rental agreement as a string value
+     */
     public String checkout(String toolCode, int rentalDayCount, int discountPercent, LocalDate checkoutDate) throws IllegalArgumentException {
         if(rentalDayCount < 1) {
             throw new IllegalArgumentException("Rental day count must be 1 or greater");
@@ -67,7 +108,11 @@ public class Inventory {
             throw new IllegalArgumentException("Discount percent must be in the range of 0 - 100");
         }
 
+        // Date format mm/dd/yy i.e 05/03/24
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy");
+
+        // Currency format $9.99
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 
         Tool tool = toolsMap.get(toolCode);
         List<String> rentalAgreement = new ArrayList<>();
@@ -78,38 +123,30 @@ public class Inventory {
         rentalAgreement.add("Rental days: " + rentalDayCount);
         rentalAgreement.add("Check out date: " + checkoutDate.format(dateTimeFormatter));
 
+        // Calculated from checkout date and rental days.
         LocalDate dueDate = checkoutDate.plusDays(rentalDayCount);
         rentalAgreement.add("Due date: " + dueDate.format(dateTimeFormatter));
 
+        // Amount per day, specified by the tool type.
         float dailyCharge = tool.getToolType().getDailyCharge();
-        rentalAgreement.add("Daily rental charge: " + NumberFormat.getCurrencyInstance().format(dailyCharge));
+        rentalAgreement.add("Daily rental charge: " + numberFormat.format(dailyCharge));
 
         int chargeDays = getChargeDays(checkoutDate, dueDate, tool.getToolType());
         rentalAgreement.add("Charge days: " + chargeDays);
 
+        // Calculated as charge days X daily charge. Resulting total rounded half up to cents. //TODO what does this mean?
         float preDiscountCharge = chargeDays * dailyCharge;
-        rentalAgreement.add("Pre-discount charge: " + NumberFormat.getCurrencyInstance().format(preDiscountCharge));
+        rentalAgreement.add("Pre-discount charge: " + numberFormat.format(preDiscountCharge));
 
         rentalAgreement.add("Discount percent: " + String.format("%d%%", discountPercent));
 
+        // Calculated from discount % and pre-discount charge. Resulting amount rounded half up to cents.
         float discountAmount = ((float) discountPercent / 100) * preDiscountCharge;
-        rentalAgreement.add("Discount amount: " + NumberFormat.getCurrencyInstance().format(discountAmount));
+        rentalAgreement.add("Discount amount: " + numberFormat.format(discountAmount));
 
-        rentalAgreement.add("Final charge: " + NumberFormat.getCurrencyInstance().format(preDiscountCharge - discountAmount));
+        // Calculated as pre-discount charge - discount amount
+        rentalAgreement.add("Final charge: " + numberFormat.format(preDiscountCharge - discountAmount));
 
         return String.join("\n", rentalAgreement);
     }
 }
-        /*
-
-● Pre-discount charge - Calculated as charge days X daily charge. Resulting total rounded half up
-to cents.
-● Discount amount - calculated from discount % and pre-discount charge. Resulting amount
-rounded half up to cents.
-● Final charge - Calculated as pre-discount charge - discount amount.
-
-with formatting as follows:
-● Date mm/dd/yy
-● Currency $9,999.99
-● Percent 99%
-        * */
