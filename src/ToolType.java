@@ -1,3 +1,7 @@
+/**
+ * This class is a POJO representing the Tool Type object.
+ * It is a subcomponent of the {@link Tool} class.
+ */
 public class ToolType {
     public static final String TOOL_NAME_LADDER = "Ladder";
     public static final String TOOL_NAME_CHAINSAW = "Chainsaw";

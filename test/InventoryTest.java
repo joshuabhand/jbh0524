@@ -20,6 +20,9 @@ public class InventoryTest {
         inventory.toolsMap.clear();
     }
 
+    /**
+     * Test if holidays are added successfully
+     */
     @Test
     public void testAddHoliday() {
         LocalDate date = LocalDate.of(2024, 5, 3);
@@ -28,6 +31,9 @@ public class InventoryTest {
         assertNotNull(inventory.holidayMap.get(dateKey));
     }
 
+    /**
+     * Test if week days are counted. Mon, May 6 - Thur, May 9
+     */
     @Test
     public void testChargeDaysOnWeekdays() {
         LocalDate checkoutDate = LocalDate.of(2024, 5, 6);
@@ -39,6 +45,9 @@ public class InventoryTest {
         assertEquals(3, chargeDays);
     }
 
+    /**
+     * Test if weekends are counted. Fri, May 3 - Mon, May 6
+     */
     @Test
     public void testChargeDaysOnWeekends() {
         LocalDate checkoutDate = LocalDate.of(2024, 5, 3);
@@ -50,6 +59,9 @@ public class InventoryTest {
         assertEquals(3, chargeDays);
     }
 
+    /**
+     * Test if weekends are NOT counted. Fri, May 3 - Mon, May 6
+     */
     @Test
     public void testChargeDaysNotOnWeekends() {
         LocalDate checkoutDate = LocalDate.of(2024, 5, 3);
@@ -61,6 +73,9 @@ public class InventoryTest {
         assertEquals(1, chargeDays);
     }
 
+    /**
+     * Test if holidays are counted. Wed, July 3 - Fri, July 5
+     */
     @Test
     public void testChargeDaysOnHolidays() {
         LocalDate checkoutDate = LocalDate.of(2024, 7, 3);
@@ -73,6 +88,9 @@ public class InventoryTest {
         assertEquals(1, chargeDays);
     }
 
+    /**
+     * Test if holidays are NOT counted. Wed, July 3 - Fri, July 5
+     */
     @Test
     public void testChargeDaysNotOnHolidays() {
         LocalDate checkoutDate = LocalDate.of(2024, 7, 3);
@@ -85,6 +103,9 @@ public class InventoryTest {
         assertEquals(1, chargeDays);
     }
 
+    /**
+     * Test if checkout returns non-null string
+     */
     @Test
     public void testCheckout() {
         LocalDate checkoutDate = LocalDate.of(2024, 7, 3);
@@ -95,6 +116,9 @@ public class InventoryTest {
         assertNotNull(printout);
     }
 
+    /**
+     * Test if checkout throws an exception for an invalid rental day count
+     */
     @Test
     public void testCheckoutWithInvalidRentalDayCount() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -107,6 +131,9 @@ public class InventoryTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+    /**
+     * Test if checkout throws an exception for an invalid discount percentage
+     */
     @Test
     public void testCheckoutWithInvalidDiscount() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {

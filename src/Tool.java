@@ -1,3 +1,6 @@
+/**
+ * This class is a POJO representing the Tool object.
+ */
 public class Tool {
     public static final String TOOL_CODE_LADDER = "LADW";
     public static final String TOOL_CODE_CHAINSAW = "CHNS";
