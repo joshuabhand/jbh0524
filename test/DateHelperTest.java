@@ -6,8 +6,14 @@ import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test the {@link DateHelper} class
+ */
 public class DateHelperTest {
 
+    /**
+     * Test if labor day dates are correct
+     */
     @Test
     public void testGetLaborDay() {
         LocalDate date = DateHelper.getLaborDay(2024);
@@ -17,6 +23,9 @@ public class DateHelperTest {
         assertEquals(7, date2.getDayOfMonth());
     }
 
+    /**
+     * Test if independence day dates are correct
+     */
     @Test
     public void testGetObservedIndependenceDay() {
         LocalDate saturdayDate = DateHelper.getObservedIndependenceDay(2020);
@@ -29,6 +38,9 @@ public class DateHelperTest {
         assertEquals("Thursday", thursdayDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US));
     }
 
+    /**
+     * Test if holiday key is correct format
+     */
     @Test
     public void testGetHolidayKey() {
         String holidayKey = DateHelper.getHolidayKey(LocalDate.of(2024, 7, 4));

@@ -6,6 +6,9 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This Test class covers the acceptance criteria provided in the original assignment
+ */
 public class AcceptanceTest {
     static Inventory inventory;
 

@@ -6,6 +6,9 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test the {@link Inventory} class
+ */
 public class InventoryTest {
     Inventory inventory;
 
