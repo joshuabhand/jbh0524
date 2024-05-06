@@ -10,18 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class InventoryTest {
     static Inventory inventory;
-    static ToolType toolTypeLadder;
-    static ToolType toolTypeChainsaw;
-    static ToolType toolTypeJackhammer;
 
     @BeforeAll
     public static void setup() {
         inventory = Inventory.getInstance();
-
-        toolTypeLadder = new ToolType(ToolType.TOOL_NAME_LADDER, 1.99f, true, true, false);
-        toolTypeChainsaw = new ToolType(ToolType.TOOL_NAME_CHAINSAW, 1.49f, true, false, true);
-        toolTypeJackhammer = new ToolType(ToolType.TOOL_NAME_JACKHAMMER, 2.99f, true, false, false);
-
         inventory.addHoliday(LocalDate.of(2024, 7, 4));
     }
 
@@ -43,7 +35,7 @@ public class InventoryTest {
     public void testChargeDaysOnWeekdays() {
         LocalDate checkoutDate = LocalDate.of(2024, 5, 6);
         LocalDate dueDate = checkoutDate.plusDays(3);
-        int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolTypeLadder);
+        int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, ToolTypeEnum.LADDER);
         assertEquals(3, chargeDays);
     }
 
@@ -54,7 +46,7 @@ public class InventoryTest {
     public void testChargeDaysOnWeekends() {
         LocalDate checkoutDate = LocalDate.of(2024, 5, 3);
         LocalDate dueDate = checkoutDate.plusDays(3);
-        int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolTypeLadder);
+        int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, ToolTypeEnum.LADDER);
         assertEquals(3, chargeDays);
     }
 
@@ -65,7 +57,7 @@ public class InventoryTest {
     public void testChargeDaysNotOnWeekends() {
         LocalDate checkoutDate = LocalDate.of(2024, 5, 3);
         LocalDate dueDate = checkoutDate.plusDays(3);
-        int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolTypeJackhammer);
+        int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, ToolTypeEnum.JACKHAMMER);
         assertEquals(1, chargeDays);
     }
 
@@ -76,7 +68,7 @@ public class InventoryTest {
     public void testChargeDaysOnHolidays() {
         LocalDate checkoutDate = LocalDate.of(2024, 7, 3);
         LocalDate dueDate = checkoutDate.plusDays(2);
-        int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolTypeChainsaw);
+        int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, ToolTypeEnum.CHAINSAW);
         assertEquals(2, chargeDays);
     }
 
@@ -87,7 +79,7 @@ public class InventoryTest {
     public void testChargeDaysNotOnHolidays() {
         LocalDate checkoutDate = LocalDate.of(2024, 7, 3);
         LocalDate dueDate = checkoutDate.plusDays(2);
-        int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolTypeLadder);
+        int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, ToolTypeEnum.LADDER);
         assertEquals(1, chargeDays);
     }
 
@@ -97,7 +89,7 @@ public class InventoryTest {
     @Test
     public void testCheckout() {
         LocalDate checkoutDate = LocalDate.of(2024, 5, 3);
-        Tool toolLadder = new Tool(Tool.TOOL_CODE_LADW, toolTypeLadder, Tool.TOOL_BRAND_WERNER);
+        Tool toolLadder = new Tool(Tool.TOOL_CODE_LADW, ToolTypeEnum.LADDER, Tool.TOOL_BRAND_WERNER);
         inventory.addTool(toolLadder);
         String printout = inventory.checkout(Tool.TOOL_CODE_LADW, 5, 20, checkoutDate);
         String expectedResult =

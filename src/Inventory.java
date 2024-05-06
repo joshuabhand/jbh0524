@@ -41,14 +41,10 @@ public class Inventory {
      * This is a convenience method to prevent redundant testing data.
      */
     public void initializeInventory() {
-        ToolType toolTypeLadder = new ToolType(ToolType.TOOL_NAME_LADDER, 1.99f, true, true, false);
-        ToolType toolTypeChainsaw = new ToolType(ToolType.TOOL_NAME_CHAINSAW, 1.49f, true, false, true);
-        ToolType toolTypeJackhammer = new ToolType(ToolType.TOOL_NAME_JACKHAMMER, 2.99f, true, false, false);
-
-        Tool toolLadder = new Tool(Tool.TOOL_CODE_LADW, toolTypeLadder, Tool.TOOL_BRAND_WERNER);
-        Tool toolChainsaw = new Tool(Tool.TOOL_CODE_CHNS, toolTypeChainsaw, Tool.TOOL_BRAND_STIHL);
-        Tool toolJackhammer = new Tool(Tool.TOOL_CODE_JAKD, toolTypeJackhammer, Tool.TOOL_BRAND_DEWALT);
-        Tool toolJackhammer2 = new Tool(Tool.TOOL_CODE_JAKR, toolTypeJackhammer, Tool.TOOL_BRAND_RIDGID);
+        Tool toolLadder = new Tool(Tool.TOOL_CODE_LADW, ToolTypeEnum.LADDER, Tool.TOOL_BRAND_WERNER);
+        Tool toolChainsaw = new Tool(Tool.TOOL_CODE_CHNS, ToolTypeEnum.CHAINSAW, Tool.TOOL_BRAND_STIHL);
+        Tool toolJackhammer = new Tool(Tool.TOOL_CODE_JAKD, ToolTypeEnum.JACKHAMMER, Tool.TOOL_BRAND_DEWALT);
+        Tool toolJackhammer2 = new Tool(Tool.TOOL_CODE_JAKR, ToolTypeEnum.JACKHAMMER, Tool.TOOL_BRAND_RIDGID);
 
         inventory.addTool(toolLadder);
         inventory.addTool(toolChainsaw);
@@ -85,7 +81,7 @@ public class Inventory {
      *
      * @return the number of days to charge for
      */
-    protected int getChargeDays(LocalDate checkoutDate, LocalDate dueDate, ToolType toolType) {
+    protected int getChargeDays(LocalDate checkoutDate, LocalDate dueDate, ToolTypeEnum toolType) {
         int chargeDays = 0;
         LocalDate startDate = checkoutDate.plusDays(1);
         LocalDate endDate = dueDate.plusDays(1);
@@ -134,7 +130,7 @@ public class Inventory {
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 
         Tool tool = toolsMap.get(toolCode);
-        ToolType toolType = tool.getToolType();
+        ToolTypeEnum toolType = tool.getToolType();
         List<String> rentalAgreement = new ArrayList<>();
 
         rentalAgreement.add("Tool code: " + tool.getToolCode());

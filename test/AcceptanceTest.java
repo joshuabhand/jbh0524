@@ -46,7 +46,7 @@ public class AcceptanceTest {
         LocalDate independenceDay = inventory.holidayMap.get(DateHelper.getHolidayKey(DateHelper.getObservedIndependenceDay(2020)));
         assertNotNull(independenceDay);
 
-        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_LADW).getToolType();
+        ToolTypeEnum toolType = inventory.toolsMap.get(Tool.TOOL_CODE_LADW).getToolType();
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolType);
         assertEquals(2, chargeDays);
 
@@ -73,7 +73,7 @@ public class AcceptanceTest {
         LocalDate independenceDay = inventory.holidayMap.get(DateHelper.getHolidayKey(DateHelper.getObservedIndependenceDay(2015)));
         assertNotNull(independenceDay);
 
-        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_CHNS).getToolType();
+        ToolTypeEnum toolType = inventory.toolsMap.get(Tool.TOOL_CODE_CHNS).getToolType();
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolType);
         assertEquals(3, chargeDays);
 
@@ -100,7 +100,7 @@ public class AcceptanceTest {
         LocalDate laborDay = inventory.holidayMap.get(DateHelper.getHolidayKey(DateHelper.getLaborDay(2015)));
         assertNotNull(laborDay);
 
-        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_JAKD).getToolType();
+        ToolTypeEnum toolType = inventory.toolsMap.get(Tool.TOOL_CODE_JAKD).getToolType();
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolType);
         assertEquals(3, chargeDays);
 
@@ -127,7 +127,7 @@ public class AcceptanceTest {
         LocalDate independenceDay = inventory.holidayMap.get(DateHelper.getHolidayKey(DateHelper.getObservedIndependenceDay(2015)));
         assertNotNull(independenceDay);
 
-        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_JAKR).getToolType();
+        ToolTypeEnum toolType = inventory.toolsMap.get(Tool.TOOL_CODE_JAKR).getToolType();
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolType);
         assertEquals(5, chargeDays);
 
@@ -154,7 +154,7 @@ public class AcceptanceTest {
         LocalDate independenceDay = inventory.holidayMap.get(DateHelper.getHolidayKey(DateHelper.getObservedIndependenceDay(2020)));
         assertNotNull(independenceDay);
 
-        ToolType toolType = inventory.toolsMap.get(Tool.TOOL_CODE_JAKR).getToolType();
+        ToolTypeEnum toolType = inventory.toolsMap.get(Tool.TOOL_CODE_JAKR).getToolType();
         int chargeDays = inventory.getChargeDays(checkoutDate, dueDate, toolType);
         assertEquals(1, chargeDays);
 

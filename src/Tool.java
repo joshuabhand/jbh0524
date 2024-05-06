@@ -13,10 +13,10 @@ public class Tool {
     public static final String TOOL_BRAND_RIDGID = "Ridgid";
 
     private String toolCode;
-    private ToolType toolType;
+    private ToolTypeEnum toolType;
     private String toolBrand;
 
-    public Tool(String toolCode, ToolType toolType, String toolBrand) {
+    public Tool(String toolCode, ToolTypeEnum toolType, String toolBrand) {
         this.toolCode = toolCode;
         this.toolType = toolType;
         this.toolBrand = toolBrand;
@@ -30,11 +30,11 @@ public class Tool {
         this.toolCode = toolCode;
     }
 
-    public ToolType getToolType() {
+    public ToolTypeEnum getToolType() {
         return toolType;
     }
 
-    public void setToolType(ToolType toolType) {
+    public void setToolType(ToolTypeEnum toolType) {
         this.toolType = toolType;
     }
 
