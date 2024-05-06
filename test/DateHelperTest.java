@@ -10,6 +10,29 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test the {@link DateHelper} class
  */
 public class DateHelperTest {
+    private static final LocalDate holiday = LocalDate.of(2024, 7, 4);
+
+    /**
+     * Test if a holiday is added successfully
+     */
+    @Test
+    public void testAddHoliday() {
+        DateHelper dateHelper = new DateHelper();
+        dateHelper.addHoliday(holiday);
+
+        assertTrue(dateHelper.isHoliday(holiday));
+    }
+
+    /**
+     * Test if holidays are added successfully
+     */
+    @Test
+    public void testAddHolidaysForYear() {
+        DateHelper dateHelper = new DateHelper();
+        dateHelper.addHolidaysForYear(2024);
+
+        assertTrue(dateHelper.isHoliday(holiday));
+    }
 
     /**
      * Test if labor day dates are correct

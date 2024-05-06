@@ -9,23 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test the {@link Inventory} class
  */
 public class InventoryTest {
-    static Inventory inventory;
+    private static Inventory inventory;
 
     @BeforeAll
     public static void setup() {
         inventory = Inventory.getInstance();
-        inventory.addHoliday(LocalDate.of(2024, 7, 4));
-    }
-
-    /**
-     * Test if holidays are added successfully
-     */
-    @Test
-    public void testAddHoliday() {
-        LocalDate date = LocalDate.of(2024, 5, 3);
-        String dateKey = DateHelper.getHolidayKey(date);
-        inventory.addHoliday(date);
-        assertNotNull(inventory.holidayMap.get(dateKey));
+        inventory.getDateHelper().addHoliday(LocalDate.of(2024, 7, 4));
     }
 
     /**
@@ -93,18 +82,19 @@ public class InventoryTest {
         inventory.addTool(toolLadder);
         String printout = inventory.checkout(Tool.TOOL_CODE_LADW, 5, 20, checkoutDate);
         String expectedResult =
-                "Tool code: LADW\n" +
-                "Tool type: Ladder\n" +
-                "Tool brand: Werner\n" +
-                "Rental days: 5\n" +
-                "Check out date: 05/03/24\n" +
-                "Due date: 05/08/24\n" +
-                "Daily rental charge: $1.99\n" +
-                "Charge days: 5\n" +
-                "Pre-discount charge: $9.95\n" +
-                "Discount percent: 20%\n" +
-                "Discount amount: $1.99\n" +
-                "Final charge: $7.96";
+                """
+                Tool code: LADW
+                Tool type: Ladder
+                Tool brand: Werner
+                Rental days: 5
+                Check out date: 05/03/24
+                Due date: 05/08/24
+                Daily rental charge: $1.99
+                Charge days: 5
+                Pre-discount charge: $9.95
+                Discount percent: 20%
+                Discount amount: $1.99
+                Final charge: $7.96""";
         assertEquals(expectedResult, printout);
     }
 

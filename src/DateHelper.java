@@ -1,13 +1,39 @@
 import java.time.LocalDate;
 import java.time.format.TextStyle;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * This class helps {@link Inventory} deal with holiday and date values.
  */
 public class DateHelper {
+    /**
+     * This field maintains the holiday list with month/day as key i.e. "74" as "July 4"
+     * and a date as the value.
+     */
+    protected final Map<String, LocalDate> holidayMap;
+
+    public DateHelper() {
+        holidayMap = new HashMap<>();
+    }
+
+    public void addHolidaysForYear(int year) {
+        addHoliday(getObservedIndependenceDay(year));
+        addHoliday(getLaborDay(year));
+    }
+
+    /**
+     * Add holiday to the collection of holidays for inventory.
+     *
+     * @param holiday holiday to be added
+     */
+    public void addHoliday(LocalDate holiday) {
+        String holidayKey = getHolidayKey(holiday);
+        holidayMap.put(holidayKey, holiday);
+    }
+
+    public boolean isHoliday(LocalDate date) {
+        return holidayMap.get(DateHelper.getHolidayKey(date)) != null;
+    }
 
     /**
      * This gets the calendar date for which Labor falls on in a given year.

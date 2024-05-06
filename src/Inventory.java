@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The inventory class maintains the tool and holiday list.
+ * The inventory class maintains the tool list.
  * It's currently a singleton to ensure one data source for tools and holidays.
  */
 public class Inventory {
@@ -18,15 +18,11 @@ public class Inventory {
      */
     protected final Map<String, Tool> toolsMap;
 
-    /**
-     * This field maintains the holiday list with month/day as key i.e. "74" as "July 4"
-     * and a date as the value. This key is obtained via {@link DateHelper}
-     */
-    protected final Map<String, LocalDate> holidayMap;
+    private final DateHelper dateHelper;
 
     private Inventory() {
         toolsMap = new HashMap<>();
-        holidayMap = new HashMap<>();
+        dateHelper = new DateHelper();
     }
 
     public static Inventory getInstance() {
@@ -40,7 +36,7 @@ public class Inventory {
     /**
      * This is a convenience method to prevent redundant testing data.
      */
-    public void initializeInventory() {
+    public void initializeInventoryTools() {
         Tool toolLadder = new Tool(Tool.TOOL_CODE_LADW, ToolTypeEnum.LADDER, Tool.TOOL_BRAND_WERNER);
         Tool toolChainsaw = new Tool(Tool.TOOL_CODE_CHNS, ToolTypeEnum.CHAINSAW, Tool.TOOL_BRAND_STIHL);
         Tool toolJackhammer = new Tool(Tool.TOOL_CODE_JAKD, ToolTypeEnum.JACKHAMMER, Tool.TOOL_BRAND_DEWALT);
@@ -52,23 +48,17 @@ public class Inventory {
         inventory.addTool(toolJackhammer2);
     }
 
+    public DateHelper getDateHelper() {
+        return dateHelper;
+    }
+
     /**
-     * Add holiday to the list of holidays for inventory.
+     * Add a tool to the list of tools for inventory.
      *
      * @param tool tool to be added to the inventory of tools
      */
     public void addTool(Tool tool) {
         toolsMap.put(tool.getToolCode(), tool);
-    }
-
-    /**
-     * Add holiday to the collection of holidays for inventory.
-     *
-     * @param holiday holiday to be added
-     */
-    public void addHoliday(LocalDate holiday) {
-        String holidayKey = DateHelper.getHolidayKey(holiday);
-        holidayMap.put(holidayKey, holiday);
     }
 
     /**
@@ -89,7 +79,7 @@ public class Inventory {
         for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
             String dayOfWeek = date.getDayOfWeek().toString();
             boolean isWeekend = "Sunday".equalsIgnoreCase(dayOfWeek) || "Saturday".equalsIgnoreCase(dayOfWeek);
-            boolean isHoliday = holidayMap.get(DateHelper.getHolidayKey(date)) != null;
+            boolean isHoliday = dateHelper.isHoliday(date);
 
             if(toolType.isHolidayChargeable() && isHoliday) {
                 chargeDays++;

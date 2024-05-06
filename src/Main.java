@@ -3,11 +3,8 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         Inventory inventory = Inventory.getInstance();
-        inventory.initializeInventory();
-
-        int currentYear = 2024;
-        inventory.addHoliday(DateHelper.getObservedIndependenceDay(currentYear));
-        inventory.addHoliday(DateHelper.getLaborDay(currentYear));
+        inventory.initializeInventoryTools();
+        inventory.getDateHelper().addHolidaysForYear(2024);
 
         try {
             String checkoutLadderRental = inventory.checkout(Tool.TOOL_CODE_LADW, 5, 20, LocalDate.of(2024, 5, 3));
